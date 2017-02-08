@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.pinger.reside.ResideLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/resideLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_menu">
+
+    <LinearLayout
+        android:paddingTop="@dimen/statusSize"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:padding="10dp"
+            android:text="左侧菜单面板"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="主页内容面板"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+
+
+</com.pinger.reside.ResideLayout>
