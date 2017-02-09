@@ -372,16 +372,6 @@ public class ResideLayout extends FrameLayout{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        switch (event.getAction()){
-            case MotionEvent.ACTION_UP:
-                if(currentStatus == Status.OPEN){
-                    close();
-                }
-                break;
-        }
-
-
         return true;
     }
 
