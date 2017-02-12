@@ -1,4 +1,4 @@
-package com.pinger.reside;
+package com.pinger.slide;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -15,23 +15,22 @@ import android.widget.FrameLayout;
 import com.nineoldandroids.view.ViewHelper;
 
 
-
 /**
  * user：  Pinger
  * date：  2017/1/30 14:20
  * desc：  仿酷狗音乐的侧滑菜单，可以拖拽的视图控件
- *
+ * <p>
  * ================== API ===================
- *
- *
- *
- *
- *
+ * <p>
+ * <p>
+ * <p>
+ * <p>
+ * <p>
  * ================= 使用教程 =================
  */
-public class ResideLayout extends FrameLayout{
+public class SlideLayout extends FrameLayout {
 
-    private static final String TAG = "DragLayout";
+    private static final String TAG = "SlideLayout";
 
     /**
      * 视图拖拽辅助类
@@ -40,15 +39,15 @@ public class ResideLayout extends FrameLayout{
     private ViewDragHelper mDragHelper;
 
     /**
-     * ResideLayout控件的高度
+     * 父控件的高度
      * 通过测量获得
      */
-    private int mHeight;
+    private int mSlideHeight;
 
     /**
-     * ResideLayout控件的宽度
+     * 父控件的宽度
      */
-    private int mWidth;
+    private int mSlideWidth;
 
     /**
      * 控件在水平方向拖拽的距离范围
@@ -70,7 +69,7 @@ public class ResideLayout extends FrameLayout{
     /**
      * 控件的状态集合，包括3种状态
      */
-    private enum Status{
+    private enum Status {
         CLOSE,      // 打开
         OPEN,       // 关闭
         SLIDING     // 正在滑动
@@ -91,28 +90,29 @@ public class ResideLayout extends FrameLayout{
      */
     private float mRangePercent = 0.6f;
 
-    public ResideLayout(Context context) {
+    public SlideLayout(Context context) {
         this(context, null);
     }
 
-    public ResideLayout(Context context, AttributeSet attrs) {
+    public SlideLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ResideLayout(Context context, AttributeSet attrs, int defStyle) {
+    public SlideLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        /**
+
+        /** View的滑动的辅助类，在回调里监听View的各种操作
          * @param forParent 要进行触摸滑动的父控件
-         * @param sensitivity 敏感度, 值越大越敏感,创建ViewDragHelper
-         * @param cb 对View的事件发生改变的回调
+         * @param sensitivity 控件滑动的速度，敏感度，1.0f正常
+         * @param cb  对View的事件发生改变的回调
          */
-        mDragHelper = ViewDragHelper.create(this, 0.5f, mCallback);
+        mDragHelper = ViewDragHelper.create(this, 0.5f, mViewCallback);
     }
 
     /**
-     * View拖动的回调用
+     * View拖动回调
      */
-    ViewDragHelper.Callback mCallback = new ViewDragHelper.Callback() {
+    ViewDragHelper.Callback mViewCallback = new ViewDragHelper.Callback() {
 
         /**
          * 捕捉按下的View孩子
@@ -140,11 +140,11 @@ public class ResideLayout extends FrameLayout{
          * @param child 子View
          * @param left 距离左侧，滑动的距离
          * @param dx 每次滑动的距离差
-         * @return  水平滑动的距离
+         * @return 水平滑动的距离
          */
         public int clampViewPositionHorizontal(View child, int left, int dx) {
-            // 如果子View是mMainContainer，则需要去限制View滑动的边界
-            if(child == mMainContainer)left = fixLeft(left);
+            // 限制View滑动的边界
+            if (child == mMainContainer) left = fixLeft(left);
             return left;
         }
 
@@ -159,24 +159,22 @@ public class ResideLayout extends FrameLayout{
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
             /**
-             * 如果移动的是菜单面板, 直接将菜单面板的变化量转交给主面板，这样每次都是主面板在做滑动操作
-             * 需要不停的给菜单面板和主面板重新绘制布局invalidate
+             * 将菜单面板的移动量给主面板
              */
-            if(changedView == mMenuContainer){
-                mMenuContainer.layout(0, 0, mWidth, mHeight);
+            if (changedView == mMenuContainer) {
+                mMenuContainer.layout(0, 0, mSlideWidth, mSlideHeight);
                 int newLeft = mMainContainer.getLeft() + dx;
                 newLeft = fixLeft(newLeft);
-                mMainContainer.layout(newLeft, 0, newLeft + mWidth, mHeight);
+                mMainContainer.layout(newLeft, 0, newLeft + mSlideWidth, mSlideHeight);
             }
 
             // 处理移动事件
             performResideEvent();
-            // 重绘
-            invalidate();
         }
+
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
-            if(xvel == 0 && mMainContainer.getLeft() > mSlideRange * 0.5f){
+            if (xvel == 0 && mMainContainer.getLeft() > mSlideRange * 0.5f) {
                 open();
             } else if (xvel > 0) {
                 open();
@@ -185,6 +183,7 @@ public class ResideLayout extends FrameLayout{
             }
 
         }
+
         @Override
         public void onViewDragStateChanged(int state) {/*拖拽状态更新的时候调用*/
             super.onViewDragStateChanged(state);
@@ -194,13 +193,14 @@ public class ResideLayout extends FrameLayout{
 
     /**
      * 设置主面板滑动的边界
+     *
      * @param left 距离左侧的距离
      * @return 修正后的距离
      */
     private int fixLeft(int left) {
-        if(left < 0){  // 限定左边界
+        if (left < 0) {  // 限定左边界
             return 0;
-        }else if (left > mSlideRange) {   // 限定右边界
+        } else if (left > mSlideRange) {   // 限定右边界
             return mSlideRange;
         }
         return left;
@@ -224,12 +224,12 @@ public class ResideLayout extends FrameLayout{
         currentStatus = updateStatus(percent);
 
         // 比较状态的变化，回调不同的控件滑动状态
-        if(lastStatus != currentStatus && mPanelSlideListener != null){
-            if(currentStatus == Status.OPEN){
+        if (lastStatus != currentStatus && mPanelSlideListener != null) {
+            if (currentStatus == Status.OPEN) {
                 mPanelSlideListener.onPanelOpened();
-            }else if (currentStatus == Status.CLOSE) {
+            } else if (currentStatus == Status.CLOSE) {
                 mPanelSlideListener.onPanelClosed();
-            }else{
+            } else {
                 mPanelSlideListener.onPanelSlide(percent);
             }
         }
@@ -237,28 +237,30 @@ public class ResideLayout extends FrameLayout{
 
     /**
      * 更新当前滑动的状态
+     *
      * @param percent 滑动百分比
      * @return
      */
     private Status updateStatus(float percent) {
-        if(percent == 0){
+        if (percent == 0) {
             return Status.CLOSE;
-        }else if (percent == 1.0f) {
+        } else if (percent == 1.0f) {
             return Status.OPEN;
-        }else{
+        } else {
             return Status.SLIDING;
         }
     }
 
     /**
      * 根据百分比，对子View进行动画处理，平移，缩放，渐变
+     *
      * @param percent 百分比
      */
     private void performAnim(float percent) {
 
         // scaleX = 0.5f + 1 * （1.0f - 0.5f）
         // 0.8f --> view的开始位置  ， 1.0f  -- > View的结束位置
-        Log.d(TAG, "evaluate: --> " +  evaluate(percent, 0.8f, 1.0f));
+        Log.d(TAG, "evaluate: --> " + evaluate(percent, 0.8f, 1.0f));
 
         // 左侧菜单从0.8的大小，放大到1.0
         ViewHelper.setScaleX(mMenuContainer, evaluate(percent, 0.8f, 1.0f));
@@ -269,23 +271,35 @@ public class ResideLayout extends FrameLayout{
         ViewHelper.setScaleY(mMainContainer, evaluate(percent, 1.0f, 0.7f));
 
         // 菜单平移
-        ViewHelper.setTranslationX(mMenuContainer, evaluate(percent, - mWidth / 2.0f, 0));
+        ViewHelper.setTranslationX(mMenuContainer, evaluate(percent, -mSlideWidth / 2.0f, 0));
 
         // 菜单渐变
         ViewHelper.setAlpha(mMenuContainer, evaluate(percent, 0.2f, 1.0f));
 
         // 拖拽时的背景颜色变化
         if (getBackground() == null) return;
-        getBackground().setColorFilter((Integer)evaluateColor(percent, Color.TRANSPARENT, Color.TRANSPARENT), PorterDuff.Mode.SRC_OVER);
+        getBackground().setColorFilter((Integer) evaluateColor(percent, Color.TRANSPARENT, Color.TRANSPARENT), PorterDuff.Mode.SRC_OVER);
     }
 
-    /** 估值器 */
+    /**
+     * 估值器
+     * @param fraction
+     * @param startValue
+     * @param endValue
+     * @return
+     */
     public Float evaluate(float fraction, Number startValue, Number endValue) {
         float startFloat = startValue.floatValue();
         return startFloat + fraction * (endValue.floatValue() - startFloat);
     }
 
-    /** 估算中间颜色 */
+    /**
+     * 估算中间颜色
+     * @param fraction
+     * @param startValue
+     * @param endValue
+     * @return
+     */
     public Object evaluateColor(float fraction, Object startValue, Object endValue) {
         int startInt = (Integer) startValue;
         int startA = (startInt >> 24) & 0xff;
@@ -297,10 +311,10 @@ public class ResideLayout extends FrameLayout{
         int endR = (endInt >> 16) & 0xff;
         int endG = (endInt >> 8) & 0xff;
         int endB = endInt & 0xff;
-        return ((startA + (int)(fraction * (endA - startA))) << 24) |
-                ((startR + (int)(fraction * (endR - startR))) << 16) |
-                ((startG + (int)(fraction * (endG - startG))) << 8) |
-                ((startB + (int)(fraction * (endB - startB))));
+        return ((startA + (int) (fraction * (endA - startA))) << 24) |
+                ((startR + (int) (fraction * (endR - startR))) << 16) |
+                ((startG + (int) (fraction * (endG - startG))) << 8) |
+                ((startB + (int) (fraction * (endB - startB))));
     }
 
 
@@ -308,15 +322,15 @@ public class ResideLayout extends FrameLayout{
         close(true);
     }
 
-    public void close(boolean isSmooth){
+    public void close(boolean isSmooth) {
         int finalLeft = 0;
-        if(isSmooth){
+        if (isSmooth) {
             // 触发一个平滑动画Scroller
-            if(mDragHelper.smoothSlideViewTo(mMainContainer, finalLeft, 0)){
+            if (mDragHelper.smoothSlideViewTo(mMainContainer, finalLeft, 0)) {
                 ViewCompat.postInvalidateOnAnimation(this);    // 触发界面重绘
             }
-        }else {
-            mMainContainer.layout(finalLeft, 0, finalLeft + mWidth, mHeight);
+        } else {
+            mMainContainer.layout(finalLeft, 0, finalLeft + mSlideWidth, mSlideHeight);
         }
     }
 
@@ -326,16 +340,17 @@ public class ResideLayout extends FrameLayout{
 
     /**
      * 打开左侧菜单控件
+     *
      * @param isSmooth 是否带动画，默认缓慢打开
      */
-    public void open(boolean isSmooth){
+    public void open(boolean isSmooth) {
         int finalLeft = mSlideRange;
-        if(isSmooth){
-            if(mDragHelper.smoothSlideViewTo(mMainContainer, finalLeft, 0)){
+        if (isSmooth) {
+            if (mDragHelper.smoothSlideViewTo(mMainContainer, finalLeft, 0)) {
                 ViewCompat.postInvalidateOnAnimation(this);
             }
-        }else {
-            mMainContainer.layout(finalLeft, 0, finalLeft + mWidth, mHeight);
+        } else {
+            mMainContainer.layout(finalLeft, 0, finalLeft + mSlideWidth, mSlideHeight);
         }
     }
 
@@ -345,7 +360,7 @@ public class ResideLayout extends FrameLayout{
     @Override
     public void computeScroll() {
         super.computeScroll();
-        if(mDragHelper.continueSettling(true)){
+        if (mDragHelper.continueSettling(true)) {
             ViewCompat.postInvalidateOnAnimation(this);
         }
 
@@ -353,6 +368,7 @@ public class ResideLayout extends FrameLayout{
 
     /**
      * 转交拦截事件给辅助类
+     *
      * @param ev
      * @return
      */
@@ -362,6 +378,7 @@ public class ResideLayout extends FrameLayout{
 
     /**
      * 转交触摸事件给辅助类
+     *
      * @param event
      * @return
      */
@@ -377,6 +394,7 @@ public class ResideLayout extends FrameLayout{
 
     /**
      * 当控件的宽高发生变化时会回调这个方法，可以用来测量控件的宽高
+     *
      * @param w
      * @param h
      * @param oldw
@@ -385,13 +403,13 @@ public class ResideLayout extends FrameLayout{
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        mHeight = getMeasuredHeight();
-        mWidth = getMeasuredWidth();
+        mSlideHeight = getMeasuredHeight();
+        mSlideWidth = getMeasuredWidth();
         /**
          * 初始化拖动的范围
          * 默认为屏幕宽度的60%
          */
-        mSlideRange = (int) (mWidth * mRangePercent);
+        mSlideRange = (int) (mSlideWidth * mRangePercent);
     }
 
     /**
@@ -400,10 +418,10 @@ public class ResideLayout extends FrameLayout{
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        if(getChildCount() < 2){
+        if (getChildCount() < 2) {
             throw new IllegalStateException("ResideLayout控件的子View必须大于2个");
         }
-        if(!((getChildAt(0) instanceof ViewGroup) && (getChildAt(1) instanceof ViewGroup))){
+        if (!((getChildAt(0) instanceof ViewGroup) && (getChildAt(1) instanceof ViewGroup))) {
             throw new IllegalArgumentException("ResideLayout控件的子View必须是ViewGroup");
         }
         mMenuContainer = (ViewGroup) getChildAt(0);
@@ -413,6 +431,7 @@ public class ResideLayout extends FrameLayout{
 
     /**
      * 获取当前的状态
+     *
      * @return 当前状态
      */
     public Status getCurrentStatus() {
@@ -421,6 +440,7 @@ public class ResideLayout extends FrameLayout{
 
     /**
      * 设置当前状态
+     *
      * @param currentStatus 需要成设置的状态
      */
     public void setCurrentStatus(Status currentStatus) {
@@ -444,13 +464,15 @@ public class ResideLayout extends FrameLayout{
 
         /**
          * 面板正在滑动
-         * @param percent  滑动的距离与滑动范围的百分比
+         *
+         * @param percent 滑动的距离与滑动范围的百分比
          */
         void onPanelSlide(float percent);
     }
 
     /**
      * 获取滑动监听对象
+     *
      * @return 滑动监听对象
      */
     public PanelSlideListener getPanelSlideListener() {
@@ -459,6 +481,7 @@ public class ResideLayout extends FrameLayout{
 
     /**
      * 设置滑动监听对象
+     *
      * @param panelSlideListener
      */
     public void setPanelSlideListener(PanelSlideListener panelSlideListener) {
@@ -467,9 +490,10 @@ public class ResideLayout extends FrameLayout{
 
     /**
      * 设置控件滑动的距离占屏幕的百分比
+     *
      * @param percent
      */
-    public void setRangePercent(float percent){
+    public void setRangePercent(float percent) {
         this.mRangePercent = percent;
     }
 
