@@ -18,15 +18,32 @@ import com.nineoldandroids.view.ViewHelper;
 /**
  * user：  Pinger
  * date：  2017/1/30 14:20
- * desc：  仿酷狗音乐的侧滑菜单，可以拖拽的视图控件
+ * desc：  仿酷狗音乐QQ的侧滑菜单，可以拖拽的视图控件
  * <p>
  * ================== API ===================
- * <p>
- * <p>
- * <p>
- * <p>
- * <p>
+ * <p> getCurrentStatus()  获取当前的状态，打开，关闭或者滑动中
+ * <p> setPanelSlideListener() 设置面板滑动监听
+ * <p> setRangePercent() 设置滑动占比
+ * <p> open()  打开侧滑
+ * <p> close() 关闭侧滑
+ *
  * ================= 使用教程 =================
+ * 布局文件中：
+         <com.pinger.slide.SlideLayout
+             xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/resideLayout"
+             android:layout_width="match_parent"
+             android:background="@mipmap/icon_bg"
+             android:layout_height="match_parent">
+
+             <include layout="@layout/layout_menu"/>
+
+             <include layout="@layout/layout_main"/>
+         </com.pinger.slide.SlideLayout>
+ *
+ * 代码中：
+ *  获取对象，设置监听，设置打开或者关闭侧滑
+ *
  */
 public class SlideLayout extends FrameLayout {
 
@@ -283,6 +300,7 @@ public class SlideLayout extends FrameLayout {
 
     /**
      * 估值器
+     *
      * @param fraction
      * @param startValue
      * @param endValue
@@ -295,6 +313,7 @@ public class SlideLayout extends FrameLayout {
 
     /**
      * 估算中间颜色
+     *
      * @param fraction
      * @param startValue
      * @param endValue
@@ -322,37 +341,10 @@ public class SlideLayout extends FrameLayout {
         close(true);
     }
 
-    public void close(boolean isSmooth) {
-        int finalLeft = 0;
-        if (isSmooth) {
-            // 触发一个平滑动画Scroller
-            if (mDragHelper.smoothSlideViewTo(mMainContainer, finalLeft, 0)) {
-                ViewCompat.postInvalidateOnAnimation(this);    // 触发界面重绘
-            }
-        } else {
-            mMainContainer.layout(finalLeft, 0, finalLeft + mSlideWidth, mSlideHeight);
-        }
-    }
-
     protected void open() {
         open(true);
     }
 
-    /**
-     * 打开左侧菜单控件
-     *
-     * @param isSmooth 是否带动画，默认缓慢打开
-     */
-    public void open(boolean isSmooth) {
-        int finalLeft = mSlideRange;
-        if (isSmooth) {
-            if (mDragHelper.smoothSlideViewTo(mMainContainer, finalLeft, 0)) {
-                ViewCompat.postInvalidateOnAnimation(this);
-            }
-        } else {
-            mMainContainer.layout(finalLeft, 0, finalLeft + mSlideWidth, mSlideHeight);
-        }
-    }
 
     /**
      * 持续计算，持续的绘制
@@ -439,16 +431,6 @@ public class SlideLayout extends FrameLayout {
     }
 
     /**
-     * 设置当前状态
-     *
-     * @param currentStatus 需要成设置的状态
-     */
-    public void setCurrentStatus(Status currentStatus) {
-        this.currentStatus = currentStatus;
-    }
-
-
-    /**
      * 面板滑动监听，包括三种滑动状态
      */
     public interface PanelSlideListener {
@@ -470,14 +452,6 @@ public class SlideLayout extends FrameLayout {
         void onPanelSlide(float percent);
     }
 
-    /**
-     * 获取滑动监听对象
-     *
-     * @return 滑动监听对象
-     */
-    public PanelSlideListener getPanelSlideListener() {
-        return mPanelSlideListener;
-    }
 
     /**
      * 设置滑动监听对象
@@ -495,6 +469,34 @@ public class SlideLayout extends FrameLayout {
      */
     public void setRangePercent(float percent) {
         this.mRangePercent = percent;
+    }
+
+    /**
+     * 打开左侧菜单控件
+     *
+     * @param isSmooth 是否带动画，默认缓慢打开
+     */
+    public void open(boolean isSmooth) {
+        int finalLeft = mSlideRange;
+        if (isSmooth) {
+            if (mDragHelper.smoothSlideViewTo(mMainContainer, finalLeft, 0)) {
+                ViewCompat.postInvalidateOnAnimation(this);
+            }
+        } else {
+            mMainContainer.layout(finalLeft, 0, finalLeft + mSlideWidth, mSlideHeight);
+        }
+    }
+
+    public void close(boolean isSmooth) {
+        int finalLeft = 0;
+        if (isSmooth) {
+            // 触发一个平滑动画Scroller
+            if (mDragHelper.smoothSlideViewTo(mMainContainer, finalLeft, 0)) {
+                ViewCompat.postInvalidateOnAnimation(this);    // 触发界面重绘
+            }
+        } else {
+            mMainContainer.layout(finalLeft, 0, finalLeft + mSlideWidth, mSlideHeight);
+        }
     }
 
 
