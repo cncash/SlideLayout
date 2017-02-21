@@ -3,6 +3,7 @@ package com.pinger.slide;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
@@ -123,7 +124,7 @@ public class SlideLayout extends FrameLayout {
          * @param sensitivity 控件滑动的速度，敏感度，1.0f正常
          * @param cb  对View的事件发生改变的回调
          */
-        mDragHelper = ViewDragHelper.create(this, 0.5f, mViewCallback);
+        mDragHelper = ViewDragHelper.create(this, 1.0f, mViewCallback);
     }
 
     /**
@@ -337,11 +338,11 @@ public class SlideLayout extends FrameLayout {
     }
 
 
-    protected void close() {
+    public void close() {
         close(true);
     }
 
-    protected void open() {
+    public void open() {
         open(true);
     }
 
@@ -364,7 +365,13 @@ public class SlideLayout extends FrameLayout {
      * @param ev
      * @return
      */
+    @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        final int action = MotionEventCompat.getActionMasked(ev);
+        if (action == MotionEvent.ACTION_CANCEL || action == MotionEvent.ACTION_UP) {
+            mDragHelper.cancel();
+            return false;
+        }
         return mDragHelper.shouldInterceptTouchEvent(ev);
     }
 
@@ -499,5 +506,12 @@ public class SlideLayout extends FrameLayout {
         }
     }
 
+    public boolean isOpened() {
+        return currentStatus == Status.OPEN;
+    }
+
+    public boolean isClosed() {
+        return currentStatus == Status.CLOSE;
+    }
 
 }

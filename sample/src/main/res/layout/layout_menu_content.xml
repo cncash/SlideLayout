@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingTop="@dimen/statusSize">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="horizontal">
+
+        <com.pinger.sample.CircleImageView
+            android:id="@+id/avatar"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@mipmap/icon_logo"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="15dp">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="万合天宜"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/vip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:background="@drawable/shape_text"
+                android:padding="3dp"
+                android:text="VIP"
+                android:textColor="@color/white"
+                android:textSize="12dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:layout_marginStart="6dp"
+                android:layout_toEndOf="@id/vip"
+                android:background="@drawable/shape_text"
+                android:padding="3dp"
+                android:text="音乐包"
+                android:textColor="@color/white"
+                android:textSize="12dp"/>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginStart="15dp"
+        android:background="@color/divider"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginStart="35dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawablePadding="20dp"
+            android:drawableStart="@mipmap/icon_message"
+            android:gravity="center_vertical"
+            android:text="消息中心"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <TextView
+
+            android:id="@+id/skin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawablePadding="20dp"
+            android:drawableStart="@mipmap/icon_skin"
+            android:gravity="center_vertical"
+            android:text="皮肤"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+
+        <TextView
+            android:id="@+id/vip_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawablePadding="20dp"
+            android:drawableStart="@mipmap/icon_jewel"
+            android:gravity="center_vertical"
+            android:text="会员中心"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawablePadding="20dp"
+            android:drawableStart="@mipmap/icon_gift"
+            android:gravity="center_vertical"
+            android:text="流量包月"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawablePadding="20dp"
+            android:drawableStart="@mipmap/icon_alert"
+            android:gravity="center_vertical"
+            android:text="定时关闭"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawablePadding="20dp"
+            android:drawableStart="@mipmap/icon_listener"
+            android:gravity="center_vertical"
+            android:text="听歌识曲"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginStart="15dp"
+        android:background="@color/divider"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginStart="35dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawablePadding="20dp"
+            android:drawableStart="@mipmap/icon_wifi"
+            android:gravity="center_vertical"
+            android:text="仅WIFI联网"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:src="@mipmap/icon_toggle_open"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginStart="35dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawablePadding="20dp"
+            android:drawableStart="@mipmap/icon_ricl"
+            android:gravity="center_vertical"
+            android:text="桌面歌词"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:src="@mipmap/icon_toggle_open"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginStart="35dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:drawablePadding="20dp"
+            android:drawableStart="@mipmap/icon_lock"
+            android:gravity="center_vertical"
+            android:text="锁屏歌词"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:src="@mipmap/icon_toggle_close"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginStart="15dp"
+        android:background="@color/divider"/>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="105dp"
+        android:layout_marginStart="35dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawablePadding="20dp"
+            android:drawableStart="@mipmap/icon_setting"
+            android:gravity="center_vertical"
+            android:text="设置"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawablePadding="20dp"
+            android:drawableStart="@mipmap/icon_exit"
+            android:gravity="center_vertical"
+            android:text="退出"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
