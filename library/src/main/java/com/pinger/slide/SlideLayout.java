@@ -32,7 +32,7 @@ import com.nineoldandroids.view.ViewHelper;
  * 布局文件中：
          <com.pinger.slide.SlideLayout
              xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/resideLayout"
+             android:id="@+id/slideLayout"
              android:layout_width="match_parent"
              android:background="@mipmap/icon_bg"
              android:layout_height="match_parent">
@@ -187,7 +187,7 @@ public class SlideLayout extends FrameLayout {
             }
 
             // 处理移动事件
-            performResideEvent();
+            performSlideEvent();
         }
 
         @Override
@@ -229,7 +229,7 @@ public class SlideLayout extends FrameLayout {
      * 对子View进行动画处理
      * 更新控件的状态信息
      */
-    protected void performResideEvent() {
+    protected void performSlideEvent() {
         // 滑动的百分比
         float percent = mMainContainer.getLeft() * 1.0f / mSlideRange;
 
@@ -418,10 +418,10 @@ public class SlideLayout extends FrameLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
         if (getChildCount() < 2) {
-            throw new IllegalStateException("ResideLayout控件的子View必须大于2个");
+            throw new IllegalStateException("SlideLayout控件的子View必须大于2个");
         }
         if (!((getChildAt(0) instanceof ViewGroup) && (getChildAt(1) instanceof ViewGroup))) {
-            throw new IllegalArgumentException("ResideLayout控件的子View必须是ViewGroup");
+            throw new IllegalArgumentException("SlideLayout控件的子View必须是ViewGroup");
         }
         mMenuContainer = (ViewGroup) getChildAt(0);
         mMainContainer = (ViewGroup) getChildAt(1);
