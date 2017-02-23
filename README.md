@@ -120,7 +120,7 @@
            * 当子View的位置发送改变时回调
            * @param changedView 改变的子View
            * @param left 距离左边界距离
-           * @param top 距离顶部距离
+           * @param top  距离顶部距离
            * @param dx 水平滑动距离差
            * @param dy 竖直滑动距离差
            */
